@@ -24,6 +24,11 @@ const routerInstance = new Router({
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ './pages/Login.vue'),
     },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: () => import(/* webpackChunkName: "logout" */ './pages/Logout.vue'),
+    },
   ],
 });
 
