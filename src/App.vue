@@ -13,7 +13,7 @@
           </router-link>
         </div>
 
-        <router-link class="navbar-item" to="/list">Список пользователей</router-link>
+        <router-link class="navbar-item" to="/">Список пользователей</router-link>
         <span class="navbar-separator">|</span>
         <router-link class="navbar-item" to="/new">Добавить пользователя</router-link>
 
@@ -31,7 +31,6 @@
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 .navbar {
