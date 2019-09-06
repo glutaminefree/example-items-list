@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import router from './router';
+import apiUser from './api/user';
 
 Vue.use(Vuex);
 
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     addNewUser(state, data) {
       state.users.push(data);
     },
+    setUsersList(state, data) {
+      state.users = data;
+    },
   },
   actions: {
     async validateUser({ commit }) {
@@ -25,6 +29,8 @@ export default new Vuex.Store({
         router.push('/login');
         return false;
       } else {
+        // TODO: add jwt verification
+
         commit('setUserSigned', true);
         return true;
       }
@@ -35,10 +41,16 @@ export default new Vuex.Store({
         : localStorage.setItem('authJwt', jwt);
     },
 
-    addUser({ commit }, userData) {
-      // TODO: save over API
+    async addUser({ commit }, userData) {
+      const saveResult = await apiUser.addItem(userData);
 
-      commit('addNewUser', userData);
+      if (saveResult.status === 200) {
+        commit('addNewUser', userData);
+      }
+    },
+    async getUsersList({ commit }) {
+      const users = await apiUser.getItems();
+      commit('setUsersList', users && users.data);
     },
   },
 });
