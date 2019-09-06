@@ -7,10 +7,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     userSigned: false,
+    users: [],
   },
   mutations: {
     setUserSigned(state, flag) {
       state.userSigned = flag;
+    },
+    addNewUser(state, data) {
+      state.users.push(data);
     },
   },
   actions: {
@@ -26,7 +30,15 @@ export default new Vuex.Store({
       }
     },
     setAuthJwt(a, jwt) {
-      localStorage.setItem('authJwt', jwt);
+      jwt === null
+        ? localStorage.removeItem('authJwt')
+        : localStorage.setItem('authJwt', jwt);
+    },
+
+    addUser({ commit }, userData) {
+      // TODO: save over API
+
+      commit('addNewUser', userData);
     },
   },
 });

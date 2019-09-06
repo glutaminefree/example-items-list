@@ -1,9 +1,14 @@
 <template>
   <div class="login-form container">
-    <div class="login-form__panel">
+    <form
+      class="login-form__panel"
+      @input="mayBeValidate"
+      @change="mayBeValidate"
+      @submit.prevent
+    >
       <h1 class="title">Новый пользователь</h1>
       <div class="field">
-        <label class="label has-text-left">Имя</label>
+        <label class="label">{{ validationRules.firstname.name }}</label>
         <div class="control">
           <input
             v-model="form.firstname"
@@ -14,7 +19,7 @@
         </div>
       </div>
       <div class="field">
-        <label class="label has-text-left">Фамилия</label>
+        <label class="label">{{ validationRules.lastname.name }}</label>
         <div class="control">
           <input
             v-model="form.lastname"
@@ -25,7 +30,7 @@
         </div>
       </div>
       <div class="field">
-        <label class="label has-text-left">Отчество</label>
+        <label class="label">{{ validationRules.middlename.name }}</label>
         <div class="control">
           <input
             v-model="form.middlename"
@@ -36,7 +41,7 @@
         </div>
       </div>
       <div class="field">
-        <label class="label has-text-left">E-mail</label>
+        <label class="label">{{ validationRules.email.name }}</label>
         <div class="control">
           <input
             v-model="form.email"
@@ -47,7 +52,7 @@
         </div>
       </div>
       <div class="field">
-        <label class="label has-text-left">Дата рождения</label>
+        <label class="label">{{ validationRules.birthday.name }}</label>
         <div class="control">
           <input
             v-model="form.birthday"
@@ -58,7 +63,7 @@
         </div>
       </div>
       <div class="field">
-        <label class="label has-text-left">Пароль</label>
+        <label class="label">{{ validationRules.password.name }}</label>
         <div class="control has-icons-right">
           <input
             v-model="form.password"
@@ -76,16 +81,27 @@
       </div>
       <div class="field">
         <div class="control">
-          <button class="button is-link">Сохранить</button>
+          <button class="button is-link" @click.prevent="addNewPerson">Сохранить</button>
         </div>
       </div>
-    </div>
+      <div class="notification is-danger" v-if="showFormErrors">
+        <p
+          v-for="(errorMessage, errorField) in formErrors"
+          :key="`error-${errorField}`"
+        >
+          {{ errorMessage }}
+        </p>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
+import mixinForm from '@/mixins/form';
+
 export default {
   name: 'new',
+  mixins: [mixinForm],
   data() {
     return {
       form: {
@@ -96,9 +112,50 @@ export default {
         email: '',
         password: '',
       },
+      validationRules: {
+        firstname: {
+          type: 'string',
+          required: true,
+          name: 'Имя',
+        },
+        lastname: {
+          type: 'string',
+          required: true,
+          name: 'Фамилия',
+        },
+        middlename: {
+          type: 'string',
+          required: true,
+          name: 'Отчество',
+        },
+        birthday: {
+          type: 'string',
+          required: true,
+          pattern: /\d{4}-\d{2}-\d{2}/,
+          name: 'Дата рождения',
+        },
+        email: {
+          type: 'email',
+          required: true,
+          name: 'E-mail',
+        },
+        password: {
+          type: 'string',
+          required: true,
+          name: 'Пароль',
+        },
+      },
 
       passwordVisible: false,
     };
+  },
+  methods: {
+    async addNewPerson() {
+      this.validate(async () => {
+        await this.$store.dispatch('addUser', this.form);
+        this.$router.push('/');
+      });
+    },
   },
 };
 </script>
