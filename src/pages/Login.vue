@@ -31,9 +31,12 @@
           >Войти</button>
         </div>
       </div>
-      <!-- <div class="notification is-danger">
-        some error
-      </div> -->
+      <div
+        class="notification is-danger"
+        v-if="loginFailed"
+      >
+        Пользователь с таким E-mail и паролем не найден.
+      </div>
     </form>
   </div>
 </template>
@@ -49,11 +52,14 @@ export default {
         email: '',
         password: '',
       },
+      loginFailed: false,
     };
   },
   methods: {
     async signIn() {
       const okAuth = await apiUser.login(this.form);
+
+      this.loginFailed = !okAuth;
 
       if (okAuth) {
         this.$router.push('/');
