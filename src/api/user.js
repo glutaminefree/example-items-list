@@ -13,4 +13,24 @@ export default {
 
     return result.status === 200;
   },
+
+  /**
+   * login - send auth data to check
+   *
+   * @param  {type} data Object Fields for sending
+   * @return {type}      Object Contain success flag
+   */
+  async login(data) {
+    const result = await axios.post(`${apiBaseUrl}/api/login`, data);
+
+    if (result.data.success && result.data.jwt) {
+      localStorage.setItem('authJwt', result.data.jwt);
+      return true;
+    }
+
+    return false;
+  },
+  logout() {
+    localStorage.removeItem('authJwt');
+  },
 };

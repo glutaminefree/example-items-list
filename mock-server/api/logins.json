@@ -1,0 +1,9 @@
+{
+  "data": [
+    {
+      "email": "test@example.com",
+      "password": "test-pass",
+      "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1Njc4NzEzMDksImV4cCI6MTU5OTQwNzMwOSwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoidGVzdEBleGFtcGxlLmNvbSIsImlkIjoiMTIzNCJ9.58s0qROrcvHTVCW0xakudI8tiDKrO5z0YLVxpe3_4aw"
+    }
+  ]
+}

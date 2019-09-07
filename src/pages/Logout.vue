@@ -3,13 +3,15 @@
 </template>
 
 <script>
+import apiUser from '@/api/user';
+
 export default {
   created() {
     this.logout();
   },
   methods: {
     logout() {
-      this.$store.dispatch('setAuthJwt', null);
+      apiUser.logout();
       this.$store.commit('setUserSigned', false);
       this.$router.push('/login');
     },

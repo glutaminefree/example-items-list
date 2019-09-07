@@ -35,11 +35,6 @@ export default new Vuex.Store({
         return true;
       }
     },
-    setAuthJwt(a, jwt) {
-      jwt === null
-        ? localStorage.removeItem('authJwt')
-        : localStorage.setItem('authJwt', jwt);
-    },
 
     async addUser({ commit }, userData) {
       const saveResult = await apiUser.addItem(userData);

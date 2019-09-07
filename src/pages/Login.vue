@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import apiUser from '@/api/user';
+
 export default {
   name: 'login',
   data() {
@@ -50,9 +52,12 @@ export default {
     };
   },
   methods: {
-    signIn() {
-      this.$store.dispatch('setAuthJwt', 'some-jwt');
-      this.$router.push('/');
+    async signIn() {
+      const okAuth = await apiUser.login(this.form);
+
+      if (okAuth) {
+        this.$router.push('/');
+      }
     },
   },
 };
