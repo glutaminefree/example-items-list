@@ -17,6 +17,9 @@ export default new Vuex.Store({
     addNewUser(state, data) {
       state.users.push(data);
     },
+    removeUser(state, userId) {
+      state.users = state.users.filter(u => u.id !== userId);
+    },
     setUsersList(state, data) {
       state.users = data;
     },
@@ -37,10 +40,17 @@ export default new Vuex.Store({
     },
 
     async addUser({ commit }, userData) {
-      const saveResult = await apiUser.addItem(userData);
+      const result = await apiUser.addItem(userData);
 
-      if (saveResult.status === 200) {
+      if (result) {
         commit('addNewUser', userData);
+      }
+    },
+    async removeUser({ commit }, userId) {
+      const result = await apiUser.removeItem(userId);
+
+      if (result) {
+        commit('removeUser', userId);
       }
     },
     async getUsersList({ commit }) {

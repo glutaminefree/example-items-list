@@ -13,6 +13,16 @@ export default {
 
     return result.status === 200;
   },
+  async removeItem(id) {
+    const result = await axios.delete(`${apiBaseUrl}/api/user/${id}`);
+
+    return result.status === 200;
+  },
+  // async updateItem() {
+  //   const result = await axios.patch(`${apiBaseUrl}/api/user/${id}`, data);
+  //
+  //   return result.status === 200;
+  // },
 
   /**
    * login - send auth data to check

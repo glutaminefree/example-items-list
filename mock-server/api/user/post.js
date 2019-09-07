@@ -1,9 +1,18 @@
 const fs = require('fs');
 const path = require('path');
-const usersList = require('../users-data.json');
 
 module.exports = (req, res) => {
-  usersList.data.push(req.body);
+  const dataFilePath = path.join(__dirname, '../users-data.json');
+  const usersListFile = fs.readFileSync(dataFilePath, 'utf-8');
+  const usersList = JSON.parse(usersListFile);
+
+  const allIds = usersList.data.map(u => u.id);
+  const id = Math.max(...allIds) + 1;
+
+  usersList.data.push({
+    id,
+    ...req.body,
+  });
 
   fs.writeFile(
     path.join(__dirname, '../users-data.json'),
