@@ -6,6 +6,7 @@ module.exports = (req, res) => {
 
   if (!userId) {
     res.status(400).json({ error: 'invalid query' });
+    return false;
   }
 
   const dataFilePath = path.join(__dirname, '../../users-data.json');

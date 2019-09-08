@@ -20,7 +20,7 @@ import { CollapseTransition } from 'vue2-transitions';
 import Person from '@/components/Person.vue'
 
 export default {
-  name: 'list',
+  name: 'PersonsList',
   components: { Person, CollapseTransition },
   computed: {
     ...mapState(['users']),

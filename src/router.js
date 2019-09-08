@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store';
-import List from './pages/List.vue';
+import PersonsList from './pages/PersonsList.vue';
 
 Vue.use(Router);
 
@@ -11,13 +11,18 @@ const routerInstance = new Router({
   routes: [
     {
       path: '/',
-      name: 'list',
-      component: List,
+      name: 'persons-list',
+      component: PersonsList,
     },
     {
       path: '/new-person',
       name: 'new-person',
       component: () => import(/* webpackChunkName: "new-person" */ './pages/NewPerson.vue'),
+    },
+    {
+      path: '/edit-person/:id',
+      name: 'edit-person',
+      component: () => import(/* webpackChunkName: "edit-person" */ './pages/EditPerson.vue'),
     },
     {
       path: '/login',

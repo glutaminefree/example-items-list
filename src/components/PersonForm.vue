@@ -146,7 +146,15 @@ export default {
       },
     };
   },
+  created() {
+    this.mayBeSetData();
+  },
   methods: {
+    mayBeSetData() {
+      if (this.data.id) {
+        this.form = this.data;
+      }
+    },
     saveForm() {
       this.validate(() => this.$emit('save', this.form));
     },

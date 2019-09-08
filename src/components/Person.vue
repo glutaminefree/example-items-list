@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     goToEdit() {
-      // this.$router.push(`/edit/${this.data.id}`);
+      this.$router.push(`/edit-person/${this.data.id}`);
     },
 
     openModal() {

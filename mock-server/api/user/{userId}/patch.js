@@ -1,8 +1,32 @@
-// const fs = require('fs');
-// const path = require('path');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = (req, res) => {
-  console.log('users patch - req.params', req.params);
-  // const userId = req.params.userId || 0;
-  res.status(200).json({result: 'ok'});
+  const userId = parseInt(req.params.userId);
+
+  if (!userId) {
+    res.status(400).json({ error: 'invalid query' });
+    return false;
+  }
+
+  const dataFilePath = path.join(__dirname, '../../users-data.json');
+  const usersListFile = fs.readFileSync(dataFilePath, 'utf-8');
+  const usersList = JSON.parse(usersListFile);
+
+  usersList.data.some((u, i, all) => {
+    if (u.id === userId) {
+      all[i] = req.body;
+      return true;
+    }
+  });
+
+  fs.writeFile(
+    dataFilePath,
+    JSON.stringify(usersList, null, 2),
+    (error) => {
+      error
+        ? res.status(500).json({ result: 'error' })
+        : res.status(200).json({ result: 'success' });
+    }
+  );
 };

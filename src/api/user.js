@@ -18,11 +18,16 @@ export default {
 
     return result.status === 200;
   },
-  // async updateItem() {
-  //   const result = await axios.patch(`${apiBaseUrl}/api/user/${id}`, data);
-  //
-  //   return result.status === 200;
-  // },
+  async getItem(id) {
+    const result = await axios.get(`${apiBaseUrl}/api/user/${id}`);
+
+    return result.status === 200 ? result.data : null;
+  },
+  async updateItem(data) {
+    const result = await axios.patch(`${apiBaseUrl}/api/user/${data.id}`, data);
+
+    return result.status === 200 && result.data.result === 'success';
+  },
 
   /**
    * login - send auth data to check

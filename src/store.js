@@ -23,6 +23,14 @@ export default new Vuex.Store({
     setUsersList(state, data) {
       state.users = data;
     },
+    updateUserData(state, data) {
+      state.users.some((user, i, allUsers) => {
+        if (user.id === data.userId) {
+          allUsers[i] = data.userData;
+          return true;
+        }
+      });
+    },
   },
   actions: {
     async validateUser({ commit }) {
@@ -56,6 +64,25 @@ export default new Vuex.Store({
     async getUsersList({ commit }) {
       const users = await apiUser.getItems();
       commit('setUsersList', users && users.data);
+    },
+    async getUserData({ commit }, userId) {
+      const userData = await apiUser.getItem(userId);
+      commit('updateUserData', { userId, userData });
+
+      return userData;
+    },
+    async updateUserData({ commit }, userData) {
+      const result = await apiUser.updateItem(userData);
+
+      if (result) {
+        commit('updateUserData', {
+          userId: userData.id,
+          userData,
+        });
+        return true;
+      }
+
+      return false;
     },
   },
 });
