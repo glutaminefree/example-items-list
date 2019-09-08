@@ -15,9 +15,9 @@ const routerInstance = new Router({
       component: List,
     },
     {
-      path: '/new',
-      name: 'new',
-      component: () => import(/* webpackChunkName: "new" */ './pages/New.vue'),
+      path: '/new-person',
+      name: 'new-person',
+      component: () => import(/* webpackChunkName: "new-person" */ './pages/NewPerson.vue'),
     },
     {
       path: '/login',

@@ -15,7 +15,7 @@
 
         <router-link class="navbar-item" to="/">Список пользователей</router-link>
         <span class="navbar-separator">|</span>
-        <router-link class="navbar-item" to="/new">Добавить пользователя</router-link>
+        <router-link class="navbar-item" to="/new-person">Добавить пользователя</router-link>
 
         <div class="navbar-end">
           <router-link class="navbar-item" to="/logout">Выход</router-link>

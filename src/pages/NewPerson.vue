@@ -100,7 +100,7 @@
 import mixinForm from '@/mixins/form';
 
 export default {
-  name: 'new',
+  name: 'NewPerson',
   mixins: [mixinForm],
   data() {
     return {
