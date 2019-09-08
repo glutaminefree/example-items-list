@@ -62,23 +62,10 @@
           />
         </div>
       </div>
-      <div class="field">
-        <label class="label">{{ validationRules.password.name }}</label>
-        <div class="control has-icons-right">
-          <input
-            v-model="form.password"
-            class="input"
-            :type="passwordVisible ? 'text': 'password'"
-          />
-          <a
-            class="login-form__password-switcher icon is-small is-right"
-            href="#"
-            @click.prevent="passwordVisible = !passwordVisible"
-          >
-            <i class="fas" :class="[passwordVisible ? 'fa-eye-slash' : 'fa-eye']"></i>
-          </a>
-        </div>
-      </div>
+      <password-field
+        v-model="form.password"
+        :label="validationRules.password.name"
+      />
       <div class="field">
         <div class="control">
           <button class="button is-link" @click.prevent="addNewPerson">Сохранить</button>
@@ -98,9 +85,11 @@
 
 <script>
 import mixinForm from '@/mixins/form';
+import PasswordField from '@/components/PasswordField.vue';
 
 export default {
   name: 'NewPerson',
+  components: { PasswordField },
   mixins: [mixinForm],
   data() {
     return {
@@ -170,9 +159,6 @@ export default {
     padding: 30px 15px;
     background: white;
     box-shadow: 3px 3px 5px gray;
-  }
-  &__password-switcher {
-    pointer-events: visible;
   }
 }
 </style>

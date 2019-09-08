@@ -30,7 +30,7 @@
 
     <fade-transition>
       <div class="modal is-active" v-if="modalVisible">
-        <div class="modal-background"></div>
+        <div class="modal-background" @click="closeModal"></div>
         <div class="modal-card">
           <header class="modal-card-head">
             <p class="modal-card-title">
@@ -43,26 +43,14 @@
             ></button>
           </header>
           <section class="modal-card-body">
-            <div class="field">
-              <label class="label">Задайте новый пароль</label>
-              <div class="control has-icons-right">
-                <input
-                  v-model="newPassword"
-                  class="input"
-                  :type="passwordVisible ? 'text': 'password'"
-                />
-                <a
-                  class="icon is-small is-right"
-                  href="#"
-                  @click.prevent="passwordVisible = !passwordVisible"
-                >
-                  <i class="fas" :class="[passwordVisible ? 'fa-eye-slash' : 'fa-eye']"></i>
-                </a>
-              </div>
-            </div>
+            <password-field v-model="newPassword" label="Задайте новый пароль" />
           </section>
           <footer class="modal-card-foot">
-            <button class="button is-link" @click="closeModal">
+            <button
+              class="button is-link"
+              :disabled="newPassword.length === 0"
+              @click="closeModal"
+            >
               Сохранить
             </button>
             <button class="button is-warning" @click="closeModal">
@@ -84,9 +72,11 @@
 
 <script>
 import { FadeTransition } from 'vue2-transitions';
+import PasswordField from '@/components/PasswordField.vue';
 
 export default {
-  components: { FadeTransition },
+  name: 'Person',
+  components: { FadeTransition, PasswordField },
   props: {
     data: {
       type: Object,
@@ -96,7 +86,6 @@ export default {
   data() {
     return {
       modalVisible: false,
-      passwordVisible: false,
       newPassword: '',
       removingInProgress: false,
       errorNotifyVisible: false,
