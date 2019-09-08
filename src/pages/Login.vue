@@ -31,21 +31,25 @@
           >Войти</button>
         </div>
       </div>
-      <div
-        class="notification is-danger"
-        v-if="loginFailed"
-      >
-        Пользователь с таким E-mail и паролем не найден.
-      </div>
+      <collapse-transition>
+        <div
+          class="notification is-danger"
+          v-if="loginFailed"
+        >
+          Пользователь с таким E-mail и паролем не найден.
+        </div>
+      </collapse-transition>
     </form>
   </div>
 </template>
 
 <script>
+import { CollapseTransition } from 'vue2-transitions';
 import apiUser from '@/api/user';
 
 export default {
   name: 'login',
+  components: { CollapseTransition },
   data() {
     return {
       form: {
