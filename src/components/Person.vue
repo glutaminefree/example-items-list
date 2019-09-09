@@ -1,19 +1,24 @@
 <template>
   <div class="person">
     <div class="person__box">
+      <span class="person__avatar icon is-large">
+        <i class="fas fa-3x fa-user-circle"></i>
+      </span>
       <div class="person__data">
-        <h2 class="person__name title is-4">{{ fullName }}</h2>
+        <h2 class="person__name">
+          <router-link
+            class="person__name-link"
+            :to="{name: 'edit-person', params: {id: data.id}}"
+          >
+            {{ fullName }}
+          </router-link>
+        </h2>
         <a class="person__email" :href="`mailto:${data.email}`">
           {{ data.email }}
         </a>
       </div>
 
       <div class="person__actions">
-        <a
-          class="person__action button is-link"
-          href="#"
-          @click.prevent="goToEdit(data.id)"
-        >Редактировать</a>
         <a
           class="person__action button is-warning"
           href="#"
@@ -156,37 +161,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables.scss";
+
 .person {
-  $this: &;
-
-  & + #{$this} {
-    margin-top: 24px;
-  }
-
   &__box {
     display: flex;
     align-items: center;
-    padding: 10px 15px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-shadow: 0 0 12px #dfdfdf;
   }
-  &__data {
-    display: flex;
-    align-items: center;
+  &__avatar {
+    margin-right: $margin;
+    color: #e2e2e8;
   }
   &__name {
-    margin-right: 20px;
+    &-link {
+      border-bottom: 1px solid transparent;
+      font-size: 20px;
+      color: $color-link;
+      transition: border-color $transition-duration;
 
-    &.title {
-      &:not(:last-child) {
-        margin-bottom: 0;
+      &:hover {
+        border-color: $color-link;
       }
     }
   }
   &__email {
-    font-size: 20px;
+    border-bottom: 1px solid transparent;
+    font-size: 16px;
+    color: $color-text;
+    transition: border-color $transition-duration;
+
+    &:hover {
+      border-color: $color-text;
+    }
   }
   &__actions {
     display: flex;
@@ -195,7 +201,7 @@ export default {
   }
   &__action {
     &:not(:last-child) {
-      margin-right: 16px;
+      margin-right: $margin-small;
     }
   }
   &__error-notify {

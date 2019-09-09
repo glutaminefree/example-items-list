@@ -8,6 +8,7 @@
           v-for="person in usersList"
           :key="`user-${person.id}`"
           :data="person"
+          class="persons-list__item"
         />
       </collapse-transition>
     </div>
@@ -65,11 +66,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables.scss";
+
 .persons-list {
   margin-top: 60px;
 
+  &__item {
+    padding: 20px 0;
+
+    &:not(:first-child) {
+      border-top: 1px solid $color-border-light;
+    }
+  }
   &__pagination {
-    margin: 40px 0;
+    margin: $margin-big 0;
   }
 }
 </style>

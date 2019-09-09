@@ -1,38 +1,16 @@
 <template>
   <div id="app">
-    <nav
-      v-if="$store.state.userSigned"
-      class="navbar is-light"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div class="container flex">
-        <div class="navbar-brand">
-          <router-link class="navbar-item" to="/">
-            <img src="./assets/logo.png" alt="" />
-          </router-link>
-        </div>
-
-        <router-link class="navbar-item" to="/">Список пользователей</router-link>
-        <span class="navbar-separator">|</span>
-        <router-link class="navbar-item" to="/new-person">Добавить пользователя</router-link>
-
-        <div class="navbar-end">
-          <router-link class="navbar-item" to="/logout">Выход</router-link>
-        </div>
-      </div>
-    </nav>
+    <Header />
     <router-view/>
   </div>
 </template>
 
-<style lang="scss" scoped>
-.navbar {
-  padding: 16px 0;
+<script>
+import Header from '@/components/Header.vue';
 
-  &-separator {
-    align-self: center;
-    padding: 0 12px;
-  }
-}
-</style>
+export default {
+  components: { Header },
+};
+</script>
+
+<style lang="scss" src="@/styles/global.scss"></style>
