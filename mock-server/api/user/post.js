@@ -9,6 +9,13 @@ module.exports = (req, res) => {
   const allIds = usersList.data.map(u => u.id);
   const id = Math.max(...allIds) + 1;
 
+  const emailAlreadyExist = usersList.data.some(u => u.email === req.body.email);
+
+  if (emailAlreadyExist) {
+    res.status(409).json({ result: 'Email already exist' });
+    return false;
+  }
+
   usersList.data.push({
     id,
     ...req.body,

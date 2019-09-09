@@ -48,9 +48,11 @@ export default new Vuex.Store({
     async addUser({ commit }, userData) {
       const result = await apiUser.addItem(userData);
 
-      if (result) {
+      if (result.success) {
         commit('addNewUser', userData);
       }
+
+      return result;
     },
     async removeUser({ commit }, userId) {
       const result = await apiUser.removeItem(userId);

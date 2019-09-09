@@ -11,16 +11,24 @@ export default {
 
       return result.status === 200 ? result.data : [];
     } catch (error) {
-      console.log('Error in getItems', error.message);
+      console.log('Error in getItems', error);
     }
   },
   async addItem(data) {
     try {
       const result = await axios.post(`${this.apiBaseUrl}/api/user`, data);
 
-      return result.status === 200;
+      return { success: result.status === 200 };
     } catch (error) {
-      console.log('Error in addItem', error.message);
+      if (error.status === 409) {
+        return {
+          success: false,
+          error: 'Email already taken'
+        };
+      } else {
+        console.log('Error in addItem', error);
+        return { success: false };
+      }
     }
   },
   async removeItem(id) {
@@ -29,7 +37,7 @@ export default {
 
       return result.status === 200;
     } catch (error) {
-      console.log('Error in removeItem', error.message);
+      console.log('Error in removeItem', error);
     }
   },
   async getItem(id) {
@@ -38,7 +46,7 @@ export default {
 
       return result.status === 200 ? result.data : null;
     } catch (error) {
-      console.log('Error in getItem', error.message);
+      console.log('Error in getItem', error);
     }
   },
   async updateItem(data) {
@@ -47,7 +55,7 @@ export default {
 
       return result.status === 200 && result.data.result === 'success';
     } catch (error) {
-      console.log('Error in updateItem', error.message);
+      console.log('Error in updateItem', error);
     }
   },
 
@@ -68,7 +76,7 @@ export default {
 
       return false;
     } catch (error) {
-      console.log('Error in login', error.message);
+      console.log('Error in login', error);
     }
   },
   logout() {
