@@ -66,7 +66,6 @@
       <div class="person__error-notify notification is-danger" v-if="errorNotifyVisible">
         <button class="delete" @click="errorNotifyVisible = false"></button>
         <span>{{ errorNotifyText }}</span>
-        Ошибка удаления. Попробуйте повторить позже или обратитесь в службу поддержки.
       </div>
     </fade-transition>
   </div>
