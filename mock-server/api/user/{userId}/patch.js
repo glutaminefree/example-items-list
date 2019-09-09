@@ -15,7 +15,7 @@ module.exports = (req, res) => {
 
   usersList.data.some((u, i, all) => {
     if (u.id === userId) {
-      all[i] = req.body;
+      Object.assign(all[i], req.body);
       return true;
     }
   });

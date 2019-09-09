@@ -48,8 +48,9 @@
           <footer class="modal-card-foot">
             <button
               class="button is-link"
+              :class="{'is-loading': passwordUpdatingInProgress}"
               :disabled="newPassword.length === 0"
-              @click="closeModal"
+              @click="updateUserPassword"
             >
               Сохранить
             </button>
@@ -64,6 +65,7 @@
     <fade-transition>
       <div class="person__error-notify notification is-danger" v-if="errorNotifyVisible">
         <button class="delete" @click="errorNotifyVisible = false"></button>
+        <span>{{ errorNotifyText }}</span>
         Ошибка удаления. Попробуйте повторить позже или обратитесь в службу поддержки.
       </div>
     </fade-transition>
@@ -73,6 +75,10 @@
 <script>
 import { FadeTransition } from 'vue2-transitions';
 import PasswordField from '@/components/PasswordField.vue';
+
+const TRY_LATER = 'Попробуйте повторить позже или обратитесь в службу поддержки.';
+const PERSON_REMOVING_ERROR = `Ошибка удаления пользователя. ${TRY_LATER}`;
+const PASSWORD_UPDATING_ERROR = `Ошибка обновления пароля. ${TRY_LATER}`;
 
 export default {
   name: 'Person',
@@ -86,8 +92,10 @@ export default {
   data() {
     return {
       modalVisible: false,
-      newPassword: '',
       removingInProgress: false,
+      newPassword: '',
+      passwordUpdatingInProgress: false,
+      errorNotifyText: '',
       errorNotifyVisible: false,
     };
   },
@@ -116,12 +124,32 @@ export default {
           .dispatch('removeUser', this.data.id)
           .catch(() => {
             this.removingInProgress = false;
+            this.errorNotifyText = PERSON_REMOVING_ERROR;
             this.errorNotifyVisible = true;
           });
       });
     },
-    updateUserPassword() {
-      // code
+    async updateUserPassword() {
+      if (this.passwordUpdatingInProgress) {
+        return false;
+      }
+
+      this.passwordUpdatingInProgress = true;
+
+      const success = await this.$store.dispatch('updateUserData', {
+        id: this.data.id,
+        password: this.newPassword,
+      });
+
+      if (success) {
+        this.passwordUpdatingInProgress = false;
+        this.modalVisible = false;
+      } else {
+        this.errorNotifyText = PASSWORD_UPDATING_ERROR;
+        this.errorNotifyVisible = true;
+      }
+
+      return true;
     },
   }
 };

@@ -26,7 +26,7 @@ export default new Vuex.Store({
     updateUserData(state, data) {
       state.users.some((user, i, allUsers) => {
         if (user.id === data.userId) {
-          allUsers[i] = data.userData;
+          Object.assign(allUsers[i], data.userData);
           return true;
         }
       });
