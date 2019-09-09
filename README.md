@@ -6,29 +6,20 @@ npm install
 ```
 
 ### Compiles and hot-reloads for development
+
+Open first terminal tab and run:
+```
+npm run mock-server
+```
+
+Open second terminal tab and run:
 ```
 npm run serve
 ```
+
+Now you can open http://localhost:8080/
 
 ### Compiles and minifies for production
 ```
 npm run build
 ```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
