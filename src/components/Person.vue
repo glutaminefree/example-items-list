@@ -114,6 +114,7 @@ export default {
     },
     closeModal() {
       this.modalVisible = false;
+      this.newPassword = '';
     },
 
     removeUser() {
