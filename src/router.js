@@ -37,10 +37,16 @@ const routerInstance = new Router({
   ],
 });
 
-routerInstance.beforeEach((to, from, next) => {
-  store.userSigned || to.name === 'login'
-    ? next()
-    : store.dispatch('validateUser').then(next);
+routerInstance.beforeEach(async (to, from, next) => {
+  if (store.userSigned || to.name === 'login') {
+    next();
+  } else {
+    const userLoged = await store.dispatch('validateUser');
+
+    userLoged
+      ? next()
+      : next('/login');
+  }
 });
 
 export default routerInstance;

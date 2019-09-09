@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import cookie from 'js-cookie';
 import router from './router';
 import apiUser from './api/user';
 
@@ -33,15 +34,12 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async validateUser({ commit }) {
-      const jwt = localStorage.getItem('authJwt');
+    validateUser({ commit }) {
+      const jwt = cookie.get(apiUser.jwtCookieName);
 
-      if (jwt === null && router.currentRoute.path !== '/login') {
-        router.push('/login');
+      if (jwt === undefined && router.currentRoute.path !== '/login') {
         return false;
       } else {
-        // TODO: add jwt verification
-
         commit('setUserSigned', true);
         return true;
       }

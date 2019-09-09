@@ -1,32 +1,54 @@
-import axios from 'axios';
-
-const apiBaseUrl = process.env.VUE_APP_API_USER_URL;
+import cookies from 'js-cookie';
+import axios from './axios';
 
 export default {
-  async getItems() {
-    const result = await axios.get(`${apiBaseUrl}/api/users`);
+  apiBaseUrl: process.env.VUE_APP_API_USER_URL,
+  jwtCookieName: 'authJwt',
 
-    return result.status === 200 ? result.data : [];
+  async getItems() {
+    try {
+      const result = await axios.get(`${this.apiBaseUrl}/api/users`);
+
+      return result.status === 200 ? result.data : [];
+    } catch (error) {
+      console.log('Error in getItems', error.message);
+    }
   },
   async addItem(data) {
-    const result = await axios.post(`${apiBaseUrl}/api/user`, data);
+    try {
+      const result = await axios.post(`${this.apiBaseUrl}/api/user`, data);
 
-    return result.status === 200;
+      return result.status === 200;
+    } catch (error) {
+      console.log('Error in addItem', error.message);
+    }
   },
   async removeItem(id) {
-    const result = await axios.delete(`${apiBaseUrl}/api/user/${id}`);
+    try {
+      const result = await axios.delete(`${this.apiBaseUrl}/api/user/${id}`);
 
-    return result.status === 200;
+      return result.status === 200;
+    } catch (error) {
+      console.log('Error in removeItem', error.message);
+    }
   },
   async getItem(id) {
-    const result = await axios.get(`${apiBaseUrl}/api/user/${id}`);
+    try {
+      const result = await axios.get(`${this.apiBaseUrl}/api/user/${id}`);
 
-    return result.status === 200 ? result.data : null;
+      return result.status === 200 ? result.data : null;
+    } catch (error) {
+      console.log('Error in getItem', error.message);
+    }
   },
   async updateItem(data) {
-    const result = await axios.patch(`${apiBaseUrl}/api/user/${data.id}`, data);
+    try {
+      const result = await axios.patch(`${this.apiBaseUrl}/api/user/${data.id}`, data);
 
-    return result.status === 200 && result.data.result === 'success';
+      return result.status === 200 && result.data.result === 'success';
+    } catch (error) {
+      console.log('Error in updateItem', error.message);
+    }
   },
 
   /**
@@ -36,16 +58,20 @@ export default {
    * @return {type}      Object Contain success flag
    */
   async login(data) {
-    const result = await axios.post(`${apiBaseUrl}/api/login`, data);
+    try {
+      const result = await axios.post(`${this.apiBaseUrl}/api/login`, data);
 
-    if (result.data.success && result.data.jwt) {
-      localStorage.setItem('authJwt', result.data.jwt);
-      return true;
+      if (result.data.success && result.data.jwt) {
+        cookies.set(this.jwtCookieName, result.data.jwt);
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      console.log('Error in login', error.message);
     }
-
-    return false;
   },
   logout() {
-    localStorage.removeItem('authJwt');
+    cookies.remove(this.jwtCookieName)
   },
 };
